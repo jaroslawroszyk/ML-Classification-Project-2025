@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -9,6 +10,9 @@ from sklearn.metrics import (
     accuracy_score, precision_score, recall_score, f1_score,
     classification_report, confusion_matrix, ConfusionMatrixDisplay
 )
+
+# Utworzenie katalogu results, jeśli nie istnieje
+os.makedirs("results", exist_ok=True)
 
 # Wczytanie danych
 df = pd.read_csv("dataset/spam.csv", encoding='latin-1')
@@ -30,6 +34,7 @@ plt.title("Liczba wiadomości (ham vs spam)")
 plt.xlabel("Typ wiadomości")
 plt.ylabel("Liczba")
 plt.tight_layout()
+plt.savefig("results/countplot_messages.png")
 plt.show()
 
 # Histogram długości wiadomości
@@ -41,6 +46,7 @@ plt.title("Rozkład długości wiadomości")
 plt.xlabel("Długość wiadomości (znaki)")
 plt.ylabel("Liczba")
 plt.tight_layout()
+plt.savefig("results/histogram_message_length.png")
 plt.show()
 
 # Podział na cechy i etykiety
@@ -101,6 +107,7 @@ disp_nb = ConfusionMatrixDisplay(confusion_matrix=cm_nb, display_labels=['ham', 
 disp_nb.plot(ax=ax)
 plt.title("Macierz pomyłek - Naive Bayes")
 plt.tight_layout()
+plt.savefig("results/confusion_matrix_nb.png")
 plt.show()
 
 # Random Forest
@@ -111,6 +118,7 @@ disp_rf = ConfusionMatrixDisplay(confusion_matrix=cm_rf, display_labels=['ham', 
 disp_rf.plot(ax=ax)
 plt.title("Macierz pomyłek - Random Forest")
 plt.tight_layout()
+plt.savefig("results/confusion_matrix_rf.png")
 plt.show()
 
 # --- PORÓWNANIE MODELI ---
@@ -132,4 +140,5 @@ plt.ylim(0, 1.1)
 plt.xticks(rotation=0)
 plt.grid(axis='y')
 plt.tight_layout()
+plt.savefig("results/model_metrics_comparison.png")
 plt.show()
